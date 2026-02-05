@@ -1,0 +1,57 @@
+{
+  "kind": "awmp.job",
+  "id": "demo-chaos-health-001",
+  "version": "0.1.0",
+  "title": "Fix Chaos Health Endpoint",
+  "client": "Ed (via AWMP Experiment)",
+  "scope": {
+    "summary": "Fix the /health endpoint to return 200 OK instead of 500 error",
+    "details": "The server currently returns 500 when CHAOS_HEALTH_STATUS=broken. The fix is to set CHAOS_HEALTH_STATUS=healthy in the environment.",
+    "constraints": [
+      "Only modify environment configuration",
+      "Do not change server.js logic",
+      "Fix must be verifiable via HTTP request"
+    ]
+  },
+  "acceptanceCriteria": {
+    "tests": [
+      {
+        "name": "health_endpoint_returns_200",
+        "command": "make test",
+        "expectedResult": "exit code 0",
+        "description": "Server returns 200 OK with {status: ok} JSON"
+      }
+    ],
+    "failureModes": [
+      "500 Internal Server Error",
+      "Connection refused (server not running)",
+      "Invalid JSON response"
+    ]
+  },
+  "deliverables": [
+    {
+      "type": "pull_request",
+      "description": "PR that sets CHAOS_HEALTH_STATUS=healthy in .env or start script"
+    },
+    {
+      "type": "evidence_bundle",
+      "description": "AWMP evidence bundle with test output and logs"
+    }
+  ],
+  "workspace": {
+    "type": "github_repo",
+    "repo": "TS00/awmp-demo",
+    "requiredPermissions": ["read", "write"],
+    "excludedPermissions": ["admin", "secrets"]
+  },
+  "payment": {
+    "amount": "0.01",
+    "currency": "USDC",
+    "milestone": "single",
+    "releaseOn": "acceptance_test_pass"
+  },
+  "timeout": "1h",
+  "documentationLinks": [
+    "https://github.com/TS00/agent-work-protocol/blob/main/EXPERIMENT.md"
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "name": "awmp-demo",
+  "version": "0.1.0",
+  "description": "AWMP Verification Kernel demo repository - deterministic pass/fail fixture",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "test": "./scripts/test.sh",
+    "demo": "make demo-broken && make demo-fixed"
+  },
+  "keywords": ["awmp", "agent-work-protocol", "verification", "demo"],
+  "author": "Kit 🎻 + Ciz 🥄",
+  "license": "MIT"
+}
